@@ -143,8 +143,8 @@
     </div>
 
     <script>
-        // --- আপনার নতুন স্ক্রিপ্ট লিঙ্ক ---
-        const SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbz0yfOoAweiRoojKmEbDol5Ly83LhnBJlVmXSQj0U8bJ1H74hPKhTkgydZO2TEFLDVT/exec';
+        // --- আপনার নতুন জেনারেট করা স্ক্রিপ্ট লিঙ্ক ---
+        const SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbSgiry7ujSJQmVwhtpmlO78JiVbzyixfufY_dDfQQBWakmHXEBn7Df2k4ZPWw4OUS/exec';
 
         async function fetchAllData() {
             const icon = document.getElementById('syncIcon');
@@ -207,9 +207,10 @@
             }
         }
 
-        // রিয়েল টাইম আপডেটের জন্য
+        // পেজ লোড হওয়ার সাথে সাথে ডাটা লোড হবে
         window.onload = fetchAllData;
-        setInterval(fetchAllData, 30000); // প্রতি ৩০ সেকেন্ডে অটো সিঙ্ক
+        // প্রতি ৩০ সেকেন্ডে অটো সিঙ্ক হবে
+        setInterval(fetchAllData, 30000); 
     </script>
 </body>
 </html>
