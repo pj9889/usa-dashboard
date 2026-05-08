@@ -1,216 +1,220 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="bn">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Jacklyn Pro Dashboard | Nexus Control</title>
+    <title>Pro Analytics Dashboard</title>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
         :root {
-            --bg: #05070a;
-            --panel: #0d1117;
-            --accent: #00d4ff;
-            --accent-glow: rgba(0, 212, 255, 0.3);
-            --text-main: #e6edf3;
-            --text-dim: #8b949e;
-            --card-border: rgba(255, 255, 255, 0.05);
+            --primary: #4361ee;
+            --success: #4cc9f0;
+            --danger: #f72585;
+            --dark: #1e1e2d;
+            --light: #f8f9fa;
         }
 
-        * { margin: 0; padding: 0; box-sizing: border-box; }
-        body { background: var(--bg); color: var(--text-main); font-family: 'Inter', 'Segoe UI', sans-serif; padding: 20px; overflow-x: hidden; }
-
-        body::before {
-            content: ''; position: fixed; top: 0; left: 0; width: 100%; height: 100%;
-            background: radial-gradient(circle at 50% 50%, #1a1f2e 0%, #05070a 100%);
-            z-index: -1;
+        body {
+            font-family: 'Segoe UI', Roboto, sans-serif;
+            background-color: #f0f2f5;
+            margin: 0;
+            padding: 0;
+            color: var(--dark);
         }
 
-        .container { max-width: 1200px; margin: 0 auto; }
-
-        .header {
-            display: flex; justify-content: space-between; align-items: center;
-            background: var(--panel); padding: 20px 30px; border-radius: 20px;
-            border: 1px solid var(--card-border); margin-bottom: 30px;
-            box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+        .navbar {
+            background: var(--dark);
+            color: white;
+            padding: 15px 30px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
         }
 
-        .header h1 { font-size: 22px; font-weight: 800; letter-spacing: 1px; display: flex; align-items: center; gap: 12px; }
-        .header h1 i { color: var(--accent); text-shadow: 0 0 15px var(--accent); }
-
-        .refresh-btn {
-            background: linear-gradient(135deg, #00d4ff 0%, #0084ff 100%);
-            color: white; border: none; padding: 12px 24px; border-radius: 12px;
-            font-weight: bold; cursor: pointer; display: flex; align-items: center; gap: 8px;
-            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-            box-shadow: 0 4px 15px rgba(0, 132, 255, 0.4);
+        .container {
+            max-width: 1200px;
+            margin: 30px auto;
+            padding: 0 20px;
         }
-        .refresh-btn:hover { transform: translateY(-2px) scale(1.05); box-shadow: 0 8px 25px rgba(0, 132, 255, 0.6); }
 
-        .section-title {
-            margin: 40px 0 20px; font-size: 14px; text-transform: uppercase;
-            color: var(--text-dim); letter-spacing: 3px; display: flex; align-items: center; gap: 15px;
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+            gap: 20px;
+            margin-bottom: 30px;
         }
-        .section-title::after { content: ''; flex: 1; height: 1px; background: var(--card-border); }
-
-        .grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 20px; }
 
         .card {
-            background: var(--panel); padding: 25px; border-radius: 24px;
-            border: 1px solid var(--card-border); position: relative;
-            transition: all 0.4s ease; overflow: hidden;
-            display: flex; flex-direction: column; align-items: flex-start;
-        }
-        .card:hover {
-            border-color: var(--accent); transform: translateY(-5px);
-            box-shadow: 0 15px 35px rgba(0,0,0,0.4), 0 0 20px var(--accent-glow);
-        }
-
-        .card .icon-box {
-            width: 45px; height: 45px; border-radius: 12px; background: rgba(0, 212, 255, 0.1);
-            display: flex; align-items: center; justify-content: center; margin-bottom: 15px;
-            color: var(--accent); font-size: 20px;
+            background: white;
+            padding: 25px;
+            border-radius: 15px;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.05);
+            transition: transform 0.3s ease;
+            position: relative;
+            overflow: hidden;
         }
 
-        .card h3 { font-size: 13px; color: var(--text-dim); margin-bottom: 8px; font-weight: 500; }
-        .card .value { font-size: 32px; font-weight: 800; color: #fff; }
+        .card:hover { transform: translateY(-5px); }
 
-        .spinning { animation: spin 1s linear infinite; }
-        @keyframes spin { 100% { transform: rotate(360deg); } }
+        .card i {
+            font-size: 40px;
+            position: absolute;
+            right: 20px;
+            bottom: 20px;
+            opacity: 0.1;
+        }
+
+        .card h3 {
+            margin: 0;
+            font-size: 14px;
+            text-transform: uppercase;
+            color: #6c757d;
+        }
+
+        .card .value {
+            font-size: 32px;
+            font-weight: bold;
+            margin: 10px 0;
+            display: block;
+        }
+
+        .chart-container {
+            background: white;
+            padding: 30px;
+            border-radius: 15px;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.05);
+            margin-bottom: 30px;
+        }
+
+        .refresh-btn {
+            background: var(--primary);
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 8px;
+            cursor: pointer;
+            font-weight: 600;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .refresh-btn:hover { background: #304cc2; }
+
+        .loading-overlay {
+            position: fixed;
+            top: 0; left: 0; width: 100%; height: 100%;
+            background: rgba(255,255,255,0.8);
+            display: flex; justify-content: center; align-items: center;
+            z-index: 1000;
+        }
 
         @media (max-width: 768px) {
-            .header { flex-direction: column; gap: 20px; text-align: center; }
-            .grid { grid-template-columns: 1fr 1fr; }
+            .stats-grid { grid-template-columns: 1fr 1fr; }
         }
     </style>
 </head>
 <body>
 
-    <div class="container">
-        <div class="header">
-            <h1><i class="fa-solid fa-shield-halved"></i> NEXUS CONTROL PANEL</h1>
-            <button class="refresh-btn" onclick="fetchAllData()" id="refreshBtn">
-                <i class="fa-solid fa-arrows-rotate" id="syncIcon"></i> SYNC SYSTEM
-            </button>
-        </div>
+<div id="loader" class="loading-overlay">
+    <h2>লোড হচ্ছে...</h2>
+</div>
 
-        <div class="section-title">Landing Hub Analytics</div>
-        <div class="grid">
-            <div class="card">
-                <div class="icon-box"><i class="fa-solid fa-users-viewfinder"></i></div>
-                <h3>Traffic Inflow</h3>
-                <div class="value" id="l-vis">0</div>
-            </div>
-            <div class="card">
-                <div class="icon-box"><i class="fa-solid fa-bolt"></i></div>
-                <h3>Action Clicks</h3>
-                <div class="value" id="l-clk">0</div>
-            </div>
-            <div class="card">
-                <div class="icon-box"><i class="fa-brands fa-chrome"></i></div>
-                <h3>Chrome Intel</h3>
-                <div class="value" id="l-chr">0</div>
-            </div>
-        </div>
+<nav class="navbar">
+    <div style="font-size: 20px; font-weight: bold;"><i class="fa-solid fa-chart-line"></i> Traffic Insights</div>
+    <button class="refresh-btn" onclick="fetchData()">
+        <i class="fa-solid fa-rotate"></i> রিফ্রেশ করুন
+    </button>
+</nav>
 
-        <div class="section-title">Core Site Conversion</div>
-        <div class="grid">
-            <div class="card">
-                <div class="icon-box"><i class="fa-solid fa-eye"></i></div>
-                <h3>Total Visitors</h3>
-                <div class="value" id="m-vis">0</div>
-            </div>
-            <div class="card">
-                <div class="icon-box"><i class="fa-solid fa-comment-nodes"></i></div>
-                <h3>Messages Sent</h3>
-                <div class="value" id="m-msg">0</div>
-            </div>
-            <div class="card">
-                <div class="icon-box"><i class="fa-solid fa-video"></i></div>
-                <h3>Video Requests</h3>
-                <div class="value" id="m-vid">0</div>
-            </div>
-            <div class="card">
-                <div class="icon-box"><i class="fa-solid fa-phone-arrow-up-right"></i></div>
-                <h3>Re-calls</h3>
-                <div class="value" id="m-agn">0</div>
-            </div>
-            <div class="card" style="border-color: rgba(56, 189, 248, 0.4);">
-                <div class="icon-box" style="background: rgba(56, 189, 248, 0.2);"><i class="fa-solid fa-user-plus"></i></div>
-                <h3>Accounts Created</h3>
-                <div class="value" id="m-reg">0</div>
-            </div>
+<div class="container">
+    <div class="stats-grid">
+        <div class="card" style="border-bottom: 4px solid var(--primary);">
+            <h3>মোট ভিজিটর</h3>
+            <span class="value" id="v">0</span>
+            <i class="fa-solid fa-users"></i>
+        </div>
+        <div class="card" style="border-bottom: 4px solid #6f42c1;">
+            <h3>মেসেজ সেন্ড</h3>
+            <span class="value" id="m">0</span>
+            <i class="fa-solid fa-comment-dots"></i>
+        </div>
+        <div class="card" style="border-bottom: 4px solid var(--success);">
+            <h3>ভিডিও কল</h3>
+            <span class="value" id="vc">0</span>
+            <i class="fa-solid fa-video"></i>
+        </div>
+        <div class="card" style="border-bottom: 4px solid #fd7e14;">
+            <h3>কল এগেন</h3>
+            <span class="value" id="ca">0</span>
+            <i class="fa-solid fa-phone-flip"></i>
+        </div>
+        <div class="card" style="border-bottom: 4px solid var(--danger);">
+            <h3>রেজিস্ট্রেশন</h3>
+            <span class="value" id="r">0</span>
+            <i class="fa-solid fa-user-plus"></i>
         </div>
     </div>
 
-    <script>
-        // --- আপনার নতুন জেনারেট করা স্ক্রিপ্ট লিঙ্ক ---
-        const SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbSgiry7ujSJQmVwhtpmlO78JiVbzyixfufY_dDfQQBWakmHXEBn7Df2k4ZPWw4OUS/exec';
+    <div class="chart-container">
+        <canvas id="trafficChart"></canvas>
+    </div>
+</div>
 
-        async function fetchAllData() {
-            const icon = document.getElementById('syncIcon');
-            const btn = document.getElementById('refreshBtn');
-            icon.classList.add('spinning');
-            btn.style.opacity = '0.7';
+<script>
+    const API_URL = "https://script.google.com/macros/s/AKfycbzXIlowODRnKPfVwnRmdBEOWPQ9SYtjLzSnuZxtBiiue3c6LbdC-wggDBimdLYLtAi-/exec";
+    let myChart;
 
-            try {
-                // Landing Data ফেচ করা
-                const lResponse = await fetch(`${SCRIPT_URL}?sheet=LandingData&action=get`);
-                const lData = await lResponse.json();
-                
-                // Main Data ফেচ করা
-                const mResponse = await fetch(`${SCRIPT_URL}?sheet=MainData&action=get`);
-                const mData = await mResponse.json();
-
-                updateUI('l', lData);
-                updateUI('m', mData);
-            } catch (error) {
-                console.error("System Failure:", error);
-            } finally {
-                setTimeout(() => {
-                    icon.classList.remove('spinning');
-                    btn.style.opacity = '1';
-                }, 1000);
-            }
-        }
-
-        function updateUI(prefix, data) {
-            if (!data || data.length <= 1) return;
+    async function fetchData() {
+        document.getElementById('loader').style.display = 'flex';
+        try {
+            const response = await fetch(API_URL);
+            const data = await response.json();
             
-            if (prefix === 'l') {
-                // Landing Data: Column index 0=Date, 1=Visitor, 2=Click, 3=Chrome
-                let totalVis = 0;
-                let clk = 0, chr = 0;
-                for(let i=1; i<data.length; i++) {
-                    totalVis += Number(data[i][1]) || 0;
-                    clk += Number(data[i][2]) || 0; 
-                    chr += Number(data[i][3]) || 0; 
-                }
-                document.getElementById('l-vis').innerText = totalVis;
-                document.getElementById('l-clk').innerText = clk;
-                document.getElementById('l-chr').innerText = chr;
-            } else {
-                // Main Data: Column index 0=Date, 1=Visitor, 2=Message, 3=Video, 4=CallAgain, 5=Register
-                let totalVis = 0;
-                let msg = 0, vid = 0, agn = 0, reg = 0;
-                for(let i=1; i<data.length; i++) {
-                    totalVis += Number(data[i][1]) || 0;
-                    msg += Number(data[i][2]) || 0; 
-                    vid += Number(data[i][3]) || 0; 
-                    agn += Number(data[i][4]) || 0; 
-                    reg += Number(data[i][5]) || 0; 
-                }
-                document.getElementById('m-vis').innerText = totalVis;
-                document.getElementById('m-msg').innerText = msg;
-                document.getElementById('m-vid').innerText = vid;
-                document.getElementById('m-agn').innerText = agn;
-                document.getElementById('m-reg').innerText = reg;
-            }
-        }
+            // কার্ড আপডেট
+            document.getElementById('v').innerText = data.visitor;
+            document.getElementById('m').innerText = data.message;
+            document.getElementById('vc').innerText = data.video;
+            document.getElementById('ca').innerText = data.callagain;
+            document.getElementById('r').innerText = data.register;
 
-        // পেজ লোড হওয়ার সাথে সাথে ডাটা লোড হবে
-        window.onload = fetchAllData;
-        // প্রতি ৩০ সেকেন্ডে অটো সিঙ্ক হবে
-        setInterval(fetchAllData, 30000); 
-    </script>
+            updateChart(data);
+        } catch (error) {
+            console.error("Error:", error);
+            alert("ডাটা লোড করতে সমস্যা হয়েছে!");
+        }
+        document.getElementById('loader').style.display = 'none';
+    }
+
+    function updateChart(data) {
+        const ctx = document.getElementById('trafficChart').getContext('2d');
+        
+        if (myChart) { myChart.destroy(); }
+
+        myChart = new Chart(ctx, {
+            type: 'bar',
+            data: {
+                labels: ['ভিজিটর', 'মেসেজ', 'ভিডিও কল', 'কল এগেন', 'রেজিস্ট্রেশন'],
+                datasets: [{
+                    label: 'Traffic Statistics',
+                    data: [data.visitor, data.message, data.video, data.callagain, data.register],
+                    backgroundColor: ['#4361ee', '#6f42c1', '#4cc9f0', '#fd7e14', '#f72585'],
+                    borderRadius: 10
+                }]
+            },
+            options: {
+                responsive: true,
+                plugins: { legend: { display: false } },
+                scales: { y: { beginAtZero: true } }
+            }
+        });
+    }
+
+    // অটো লোড
+    window.onload = fetchData;
+</script>
+
 </body>
 </html>
