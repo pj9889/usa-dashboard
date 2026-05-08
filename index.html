@@ -143,7 +143,7 @@
     </div>
 
     <script>
-        // আপনার নতুন জেনারেট করা স্ক্রিপ্ট লিঙ্কটি এখানে বসান
+        // --- আপনার নতুন স্ক্রিপ্ট লিঙ্ক ---
         const SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbz0yfOoAweiRoojKmEbDol5Ly83LhnBJlVmXSQj0U8bJ1H74hPKhTkgydZO2TEFLDVT/exec';
 
         async function fetchAllData() {
@@ -164,7 +164,7 @@
                 updateUI('l', lData);
                 updateUI('m', mData);
             } catch (error) {
-                console.error("Critical System Failure:", error);
+                console.error("System Failure:", error);
             } finally {
                 setTimeout(() => {
                     icon.classList.remove('spinning');
@@ -177,25 +177,27 @@
             if (!data || data.length <= 1) return;
             
             if (prefix === 'l') {
-                // Landing Data logic
-                let totalVis = data.length - 1;
+                // Landing Data: Column index 0=Date, 1=Visitor, 2=Click, 3=Chrome
+                let totalVis = 0;
                 let clk = 0, chr = 0;
                 for(let i=1; i<data.length; i++) {
-                    clk += Number(data[i][2]) || 0; // Click column
-                    chr += Number(data[i][3]) || 0; // Chrome column
+                    totalVis += Number(data[i][1]) || 0;
+                    clk += Number(data[i][2]) || 0; 
+                    chr += Number(data[i][3]) || 0; 
                 }
                 document.getElementById('l-vis').innerText = totalVis;
                 document.getElementById('l-clk').innerText = clk;
                 document.getElementById('l-chr').innerText = chr;
             } else {
-                // Main Website Data logic
-                let totalVis = data.length - 1;
+                // Main Data: Column index 0=Date, 1=Visitor, 2=Message, 3=Video, 4=CallAgain, 5=Register
+                let totalVis = 0;
                 let msg = 0, vid = 0, agn = 0, reg = 0;
                 for(let i=1; i<data.length; i++) {
-                    msg += Number(data[i][2]) || 0; // Message column
-                    vid += Number(data[i][3]) || 0; // Video column
-                    agn += Number(data[i][4]) || 0; // Call Again column
-                    reg += Number(data[i][5]) || 0; // Register column
+                    totalVis += Number(data[i][1]) || 0;
+                    msg += Number(data[i][2]) || 0; 
+                    vid += Number(data[i][3]) || 0; 
+                    agn += Number(data[i][4]) || 0; 
+                    reg += Number(data[i][5]) || 0; 
                 }
                 document.getElementById('m-vis').innerText = totalVis;
                 document.getElementById('m-msg').innerText = msg;
@@ -205,9 +207,9 @@
             }
         }
 
+        // রিয়েল টাইম আপডেটের জন্য
         window.onload = fetchAllData;
-        // প্রতি ৩০ সেকেন্ডে অটো রিফ্রেশ হবে যাতে লাইভ আপডেট পাওয়া যায়
-        setInterval(fetchAllData, 30000);
+        setInterval(fetchAllData, 30000); // প্রতি ৩০ সেকেন্ডে অটো সিঙ্ক
     </script>
 </body>
 </html>
