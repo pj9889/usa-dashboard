@@ -42,7 +42,7 @@
             opacity: 1;
         }
 
-        /* মেইন ব্যাকগ্রাউন্ড ওভারলে সামান্য হালকা করা হয়েছে যাতে ছবি ৮০% স্পষ্ট আসে */
+        /* মেইন ব্যাকগ্রাউন্ড ওভারলে সামান্য হালকা করা হয়েছে যাতে ছবি ৮০% স্পষ্ট আসে */
         .overlay {
             position: absolute;
             top: 0;
@@ -79,16 +79,16 @@
             filter: drop-shadow(0px 4px 12px rgba(255, 114, 0, 0.3));
         }
 
-        /* লেখার বক্স (Card) - এটিকে ২০% কালার এবং ৮০% ট্রান্সপারেন্ট করা হয়েছে */
+        /* লেখার বক্স (Card) - এটিকে ২০% কালার এবং ৮০% ট্রান্সপারেন্ট করা হয়েছে */
         .card {
             background: rgba(13, 27, 42, 0.25); /* ব্যাকগ্রাউন্ড মাত্র ২৫% ডার্ক, বাকিটা ট্রান্সপারেন্ট */
-            backdrop-filter: blur(2px);          /* ব্লার একদম কমিয়ে দেওয়া হয়েছে যাতে পেছনের ছবি স্পষ্ট দেখা যায় */
+            backdrop-filter: blur(2px);          /* ব্লার একদম কমিয়ে দেওয়া হয়েছে যাতে পেছনের ছবি স্পষ্ট দেখা যায় */
             -webkit-backdrop-filter: blur(2px);
             padding: 35px 30px;
             border-radius: 20px;
             max-width: 480px;
             width: 100%;
-            border: 1px solid rgba(255, 114, 0, 0.4); /* বর্ডার লাইনের ব্রাইটনেস বাড়ানো হয়েছে যাতে বক্সের বর্ডার বোঝা যায় */
+            border: 1px solid rgba(255, 114, 0, 0.4); /* বর্ডার লাইনের ব্রাইটনেস বাড়ানো হয়েছে যাতে বক্সের বর্ডার বোঝা যায় */
             box-shadow: 0 10px 40px rgba(0, 0, 0, 0.6);
         }
 
@@ -98,7 +98,7 @@
             color: #ff7200;
             font-weight: 700;
             letter-spacing: 0.5px;
-            text-shadow: 0px 2px 4px rgba(0, 0, 0, 0.8); /* লেখার রিডাবিলিটি ঠিক রাখার জন্য শ্যাডো দেওয়া হয়েছে */
+            text-shadow: 0px 2px 4px rgba(0, 0, 0, 0.8); /* লেখার রিডাবিলিটি ঠিক রাখার জন্য শ্যাডো দেওয়া হয়েছে */
         }
 
         .description {
@@ -113,7 +113,7 @@
         .warning-text {
             font-size: 13px;
             color: #ffcc00;
-            background: rgba(0, 0, 0, 0.6); /* ওয়ার্নিং টেক্সটের ব্যাকগ্রাউন্ড ডার্ক করা হয়েছে যেন লেখা পড়া যায় */
+            background: rgba(0, 0, 0, 0.6); /* ওয়ার্নিং টেক্সটের ব্যাকগ্রাউন্ড ডার্ক করা হয়েছে যেন লেখা পড়া যায় */
             border: 1px dashed rgba(255, 204, 0, 0.5);
             padding: 10px;
             border-radius: 8px;
@@ -133,7 +133,7 @@
 
         .timer-container {
             margin-bottom: 20px;
-            background: rgba(0, 0, 0, 0.6); /* টাইমারের ব্যাকগ্রাউন্ড ডার্ক করা হয়েছে স্পষ্ট দেখার জন্য */
+            background: rgba(0, 0, 0, 0.6); /* টাইমারের ব্যাকগ্রাউন্ড ডার্ক করা হয়েছে স্পষ্ট দেখার জন্য */
             border: 1px solid rgba(255, 114, 0, 0.4);
             border-radius: 10px;
             padding: 12px;
@@ -248,7 +248,6 @@
 </head>
 <body>
 
-    <!-- ব্যাকগ্রাউন্ড ইমেজ স্লাইডার (১ সেকেন্ড স্পিড) -->
     <div class="bg-slider">
         <div class="slide active" style="background-image: url('i1.webp');"></div>
         <div class="slide" style="background-image: url('i2.webp');"></div>
@@ -264,7 +263,6 @@
             <img src="lu11.webp" alt="Locanto Premium Logo" class="logo">
         </div>
 
-        <!-- ধাপ ১ -->
         <div id="step-1" class="card">
             <h1>Locanto Verified Service</h1>
             <p class="description">Welcome to Chat Avenu's premium private community. All listed profiles are 100% real, active, and verified.</p>
@@ -276,7 +274,6 @@
             </div>
         </div>
 
-        <!-- ধাপ ২ -->
         <div id="step-2" class="card hidden">
             <h1>Connect For Free</h1>
             <p class="description">To discuss free trial service options directly with our nearby verified users, activate your free account instantly on our partner site.</p>
@@ -288,7 +285,6 @@
         </div>
     </div>
 
-    <!-- বাফারিং স্ক্রিন -->
     <div id="loading-screen" class="hidden">
         <img src="lu11.webp" alt="Locanto Premium Logo" class="logo" style="width: 180px;">
         <div class="spinner"></div>
@@ -311,12 +307,12 @@
             document.getElementById('step-2').classList.remove('hidden');
         }
 
-        // ২ সেকেন্ড ফেক বাফারিং
+        // ১ সেকেন্ড ফেক বাফারিং (টাইম পরিবর্তন করে 1000ms করা হয়েছে)
         function startBuffering() {
             document.getElementById('loading-screen').classList.remove('hidden');
             setTimeout(() => {
                 window.location.href = "https://paysale.g2afse.com/click?pid=125904&offer_id=10417&sub1=evanu";
-            }, 2000);
+            }, 1000); // ১ সেকেন্ড লোড হবে
         }
 
         // টাইমার স্ক্রিপ্ট
